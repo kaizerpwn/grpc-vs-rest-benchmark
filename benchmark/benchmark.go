@@ -351,7 +351,7 @@ func (b *Benchmarker) benchmarkGRPCGetUser(ctx context.Context, userID int32) Re
 	success := (err == nil && resp != nil) ||
 		(err != nil && strings.Contains(err.Error(), "NotFound"))
 
-	reqData, _ := json.Marshal(req)
+	reqData, _ := proto.Marshal(req)
 	bytesOut := int64(len(reqData))
 
 	bytesIn := b.calculateBytesFromResponse(resp, err, true)
@@ -398,7 +398,7 @@ func (b *Benchmarker) benchmarkGRPCGetUsers(ctx context.Context, limit, offset i
 	latency := time.Since(start)
 	success := err == nil && resp != nil
 
-	reqData, _ := json.Marshal(req)
+	reqData, _ := proto.Marshal(req)
 	bytesOut := int64(len(reqData))
 	bytesIn := b.calculateBytesFromResponse(resp, err, true)
 
@@ -457,7 +457,7 @@ func (b *Benchmarker) benchmarkGRPCCreateUser(ctx context.Context, user *TestUse
 	success := err == nil && resp != nil ||
 		(err != nil && strings.Contains(err.Error(), "InvalidArgument"))
 
-	reqData, _ := json.Marshal(req)
+	reqData, _ := proto.Marshal(req)
 	bytesOut := int64(len(reqData))
 	bytesIn := b.calculateBytesFromResponse(resp, err, true)
 
