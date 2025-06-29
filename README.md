@@ -38,8 +38,6 @@ gRPC Service (port 50051)     REST Service (port 8080)
 └── 10ms artificial delay     └── 10ms artificial delay
 ```
 
-**Academic Achievement**: Now using true protobuf binary marshaling with properly generated proto structs instead of empirical estimation, providing 100% accurate bytes measurement.
-
 ## Test Scenarios
 
 Comprehensive test matrix covering multiple realistic scenarios:
@@ -207,8 +205,6 @@ This research implements academic-grade measurement standards:
 - **Deterministic testing** with fixed random seeds for reproducibility
 - **Comprehensive metrics** including CPU, memory, latency percentiles
 - **Statistical validity** through multiple test scenarios and sustained load testing
-
-**Validation Results**: All measurements pass academic validation checks for consistency, realism, and technical accuracy.
 
 ## Limitations
 
