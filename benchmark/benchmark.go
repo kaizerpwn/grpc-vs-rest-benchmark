@@ -260,28 +260,19 @@ func (b *Benchmarker) processResults(scenario TestScenario, protocol Protocol, e
 	}
 }
 
-// calculateBytesFromResponse calculates the actual bytes transferred in responses.
-// For gRPC: Uses real protobuf marshaling with properly generated proto structs.
-// For REST: Uses actual JSON marshaling for precise measurement.
-//
-// Academic Achievement: Now using 100% dynamic calculation without any hardcoded fallbacks
-// to ensure complete academic validity and precision.
 func (b *Benchmarker) calculateBytesFromResponse(resp interface{}, err error, isGRPC bool) int64 {
 	if resp != nil {
 		if isGRPC {
-			// Use real protobuf marshaling with properly generated structs
 			if protoMsg, ok := resp.(proto.Message); ok {
 				if data, marshalErr := proto.Marshal(protoMsg); marshalErr == nil {
 					return int64(len(data))
 				}
 			}
 
-			// Fallback to JSON if proto.Marshal somehow fails
 			if data, marshalErr := json.Marshal(resp); marshalErr == nil && len(data) > 0 {
 				return int64(len(data))
 			}
 		} else {
-			// REST: Use actual JSON marshaling
 			if data, marshalErr := json.Marshal(resp); marshalErr == nil && len(data) > 0 {
 				return int64(len(data))
 			}
@@ -289,16 +280,11 @@ func (b *Benchmarker) calculateBytesFromResponse(resp interface{}, err error, is
 	}
 
 	if err != nil && isGRPC {
-		// gRPC error response size estimation - purely based on actual error message length
-		return int64(len(err.Error()) + 20) // 20 bytes for gRPC metadata
+		return int64(len(err.Error()) + 20)
 	}
 
-	// For academic validity: Log when we can't calculate bytes dynamically
-	// This should never happen in a properly functioning system
 	log.Printf("WARNING: Unable to calculate bytes dynamically for response: %+v, error: %v", resp, err)
 
-	// Return 0 instead of hardcoded value to maintain academic integrity
-	// Any zero values in results will indicate calculation failures that need investigation
 	return 0
 }
 
